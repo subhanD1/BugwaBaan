@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Code Secure Bug Web</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      height: 100vh;
+      background: linear-gradient(180deg, #330000, #000);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-container, .dashboard {
+      background: #1a0000;
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 0 15px #ff0000aa;
+    }
+    .login-container img, .dashboard img {
+      width: 100px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+    h2, h1 {
+      color: #ff4d4d;
+      margin-bottom: 20px;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      background: #330000;
+      color: white;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #ff1a1a;
+      color: white;
+      font-weight: bold;
+      margin-top: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #cc0000;
+    }
+    .connected {
+      color: lime;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .logout {
+      margin-top: 20px;
+      background: transparent;
+      border: 1px solid red;
+      color: red;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container" id="loginPage">
+    <img src="https://files.catbox.moe/dis7zz.jpg" alt="Logo">
+    <h2>Login ke Invictus</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">🔒 Login</button>
+    <div class="footer">&copy; 2025 Tredict Invictus</div>
+  </div>
+
+  <div class="dashboard" id="dashboardPage" style="display: none;">
+    <img src="https://files.catbox.moe/dis7zz.jpg" alt="Logo">
+    <h1>Welcome Bro, <span id="Baan"></span></h1>
+    <div class="connected">● CONNECTED</div>
+    <input type="text" id="targetNumber" placeholder="Please input target number, example">
+    <select id="bugType">
+      <option value="Bug Crash WA">Forclose</option>
+      <option value="Spam WA">Blanking</option>
+      <option value="Report WA">Delay Invis</option>
+    </select>
+    <button onclick="executeBug()">EXECUTE</button>
+    <button class="logout" onclick="logout()">Logout</button>
+    <div class="footer">
+      👤 Baanbugwa<br>
+      📅 22/07/25, 17:27
+    </div>
+  </div>
+
+  <script>
+    let usersDB = [];
+    fetch("https://github.com/subhanD1/Baan/actions")
+      .then(res => res.json())
+      .then(data => {
+        usersDB = data;
+      })
+      .catch(err => alert("Gagal memuat data user dari GitHub!"));
+
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      const found = usersDB.find(u => u.username === user && u.password === pass);
+      if (found) {
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("dashboardPage").style.display = "block";
+        document.getElementById("userDisplay").innerText = user;
+      } else {
+        alert("Login gagal! Username/password salah.");
+      }
+    }
+
+    function executeBug() {
+      const target = document.getElementById("targetNumber").value;
+      const bug = document.getElementById("bugType").value;
+      if (!target) return alert("Harap isi nomor target!");
+      alert(`Mengirim '${bug}' ke ${target}...`);
+    }
+
+    function logout() {
+      location.reload();
+    }
+  </script>
+</body>
+</html>
